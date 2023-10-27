@@ -43,4 +43,6 @@ public class TestController {
 	public List<Map<String, Object>> test4() {
 		return postMapper.selectPostList(); //json
 	}
+	
+	
 }
