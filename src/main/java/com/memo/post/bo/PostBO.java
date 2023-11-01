@@ -20,4 +20,15 @@ public class PostBO {
 		return postMapper.selectpostListByUserId(userId);
 	}
 	
+	//input: 파라미터 들
+	//output: x
+	public void addtPost(int userId, String subject, String content) {
+		String imagePath = null;
+		
+		// TODO : 이미지가 있으면 업로드
+		
+		postMapper.insertPost(userId, subject, content, imagePath);
+	}
+	
+	
 }

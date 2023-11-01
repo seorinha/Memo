@@ -36,4 +36,17 @@ public class PostController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 글쓰기 화면
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/post-create-view")
+	public String postCreateView(Model model) {
+		model.addAttribute("viewName", "post/postCreate");
+		return "template/layout";
+	}
+	
+	
+	
 }
