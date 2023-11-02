@@ -14,13 +14,15 @@ public class PostBO {
 	@Autowired
 	private PostMapper postMapper;
 	
+	//게시판 글 목록 뷰
 	//input:userId
 	//output:List<Post>
 	public List<Post> getPostListByUserId(int userId) {
 		return postMapper.selectpostListByUserId(userId);
 	}
 	
-	//input: 파라미터 들
+	//글쓰기 submit
+	//input: 파라미터들(userId, subject, content)
 	//output: x
 	public void addtPost(int userId, String subject, String content) {
 		String imagePath = null;

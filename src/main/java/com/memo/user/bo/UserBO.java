@@ -12,13 +12,14 @@ public class UserBO {
 	@Autowired
 	private UserRepository userRepository; 
 	
+	//아이디 중복 체크 
 	//input:loginId
 	//output:UserEntity(null이거나 채워져있거나 둘중의 하나의 상태로 return)
 	public UserEntity getUserEntityByLoginId(String loginId) {
 		return userRepository.findByLoginId(loginId);
 	}
 	
-	//로그인 화면
+	//로그인 submit
 	//input: loginId, password
 	//output: userEntity(null이거나 entity로 넘기는 것)
 	public UserEntity getUserEntityByLoginIdPassword(String loginId, String password) {
@@ -26,7 +27,8 @@ public class UserBO {
 	}
 	
 	
-	//input: 4개 파라미터
+	//회원가입 submit
+	//input: 4개 파라미터(loginId, password, name, email)
 	//output: id(pk)
 	public Integer addUser(String loginId, String password, String name, String email) {
 		// UserEntity = save(UserEntity);

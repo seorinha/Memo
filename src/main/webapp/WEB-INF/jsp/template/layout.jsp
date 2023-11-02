@@ -19,9 +19,11 @@
 		<header class="bg-warning">
 			<jsp:include page="../include/header.jsp" />
 		</header>
+		
 		<section class="contents">
 			<jsp:include page="../${viewName}.jsp" />
 		</section>
+		
 		<footer class="bg-warning">
 			<jsp:include page="../include/footer.jsp" />
 		</footer>

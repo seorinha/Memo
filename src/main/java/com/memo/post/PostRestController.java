@@ -21,6 +21,13 @@ public class PostRestController {
 	@Autowired
 	private PostBO postBO;
 	
+	/**
+	 * 글쓰기 submit
+	 * @param subject
+	 * @param content
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	//mybatis
 	public Map<String, Object> create(

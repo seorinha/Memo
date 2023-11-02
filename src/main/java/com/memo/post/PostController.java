@@ -20,6 +20,12 @@ public class PostController {
 	@Autowired
 	private PostBO postBO;
 	
+	/**
+	 * 게시판 글 목록 뷰
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/post-list-view")
 	public String postListView(Model model, HttpSession session) {
 		//로그인 여부 조회
@@ -37,7 +43,7 @@ public class PostController {
 	}
 	
 	/**
-	 * 글쓰기 화면
+	 * 글쓰기 화면 뷰
 	 * @param model
 	 * @return
 	 */

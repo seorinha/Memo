@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
 	/**
-	 * 회원가입화면
+	 * 회원가입 화면 뷰
 	 * @param model
 	 * @return
 	 */
@@ -22,8 +22,9 @@ public class UserController {
 		return "template/layout";
 	}
 	
+	
 	/**
-	 * 로그인 API
+	 * 로그인 화면 뷰
 	 * @param model
 	 * @return
 	 */
@@ -33,17 +34,18 @@ public class UserController {
 		return "template/layout";
 	}
 	
+	
+	//로그아웃
 	@RequestMapping("/sign-out")
 	public String signOut(HttpSession session) {
-		// 세션에 있는 내용을 비운다.
+		//세션에 있는 내용을 비운다 (10.31화요일)
 		session.removeAttribute("userId");
 		session.removeAttribute("userName");
 		session.removeAttribute("userLoginId");
-
-		// 로그인 화면으로 이동
+		
+		//로그인 화면으로 이동하기
 		return "redirect:/user/sign-in-view";
 	}
-	
 	
 	
 }
