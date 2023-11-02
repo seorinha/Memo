@@ -36,7 +36,7 @@ $(document).ready(function() {
 		
 		//validation
 		let loginId = $('input[name=loginId]').val().trim();
-		let passward = $('#password').val();
+		let password = $('#password').val();
 		
 		if (!loginId) {
 			alert("아이디를 입력하세요");
