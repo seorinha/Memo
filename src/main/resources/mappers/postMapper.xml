@@ -10,19 +10,35 @@
  			`post`
  	</select>
  	<select id="selectPostListByUserId" parameterType="int" resultType="com.memo.post.domain.Post">
- 	SELECT
-		`id`
-		, `userId`
-		, `subject`
-		, `content`
-		, `imagePath`
-		, `createdAt`
-		, `updatedAt`
-	FROM
-		`post`
-	WHERE
-		`userId` = #{userId}
-	ORDER BY `id` DESC
+	 	SELECT
+			`id`
+			, `userId`
+			, `subject`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY `id` DESC
+ 	</select>
+ 	
+ 	<select id="selectPostByPostIdUserId" parameterType="map" resultType="com.memo.post.domain.Post">
+ 		SELECT
+			`id`
+			, `userId`
+			, `subject`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+			AND `id` = #{postId}
  	</select>
  	
  	<insert id="insertPost" parameterType="map">

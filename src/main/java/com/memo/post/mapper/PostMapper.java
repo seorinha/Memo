@@ -17,6 +17,12 @@ public interface PostMapper {
     //게시판 글 목록 뷰
     public List<Post> selectPostListByUserId(int userId);
     
+    //글상세 가져오기
+    public Post selectPostByPostIdUserId(
+    		@Param("postId") int postId, 
+    		@Param("userId") int userId);
+    
+    
     //글쓰기 submit
     public void insertPost(
     		@Param("userId") int userId, 

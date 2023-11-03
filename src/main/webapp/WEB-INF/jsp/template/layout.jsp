@@ -20,8 +20,8 @@
 			<jsp:include page="../include/header.jsp" />
 		</header>
 		
-		<section class="contents">
-			<jsp:include page="../${viewName}.jsp" />
+		<section class="contents my-5">
+				<jsp:include page="../${viewName}.jsp" />			
 		</section>
 		
 		<footer class="bg-warning">

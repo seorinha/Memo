@@ -16,10 +16,10 @@ public class FileManagerService {
 	//실제 업로드가 된 이미지가 저장 될 경로(서버의 주소)
 	//상수로 하고자 할 때는 static final을 사용한다 , 상수는 관례적으로 대문자
 	//학원경로
-	//public static final String FILE_UPLOAD_PATH = "D:\\하서린\\5_spring_project\\MEMO\\workspace\\images/";
+	public static final String FILE_UPLOAD_PATH = "D:\\하서린\\5_spring_project\\MEMO\\workspace\\images/";
 	
 	//집 경로
-	public static final String FILE_UPLOAD_PATH = "C:\\Users\\ASUS\\Desktop\\웹개발\\5_spring_project\\MEMO\\workspace\\images/";
+	//public static final String FILE_UPLOAD_PATH = "C:\\Users\\ASUS\\Desktop\\웹개발\\5_spring_project\\MEMO\\workspace\\images/";
 	
 	
 	//input: userLoginId, file(이미지)
