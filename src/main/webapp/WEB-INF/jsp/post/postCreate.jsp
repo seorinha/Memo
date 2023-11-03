@@ -25,64 +25,66 @@
 
 <script>
 $(document).ready(function() {
-	//목록 버튼 클릭-> 글 목록 화면 이동
+	// 목록 버튼 클릭 => 글 목록 화면 이동
 	$('#postListBtn').on('click', function() {
-		//alert("클릭");
 		location.href = "/post/post-list-view";
 	});
 	
-	//모두 지우기 버튼
+	// 모두 지우기 버튼
 	$('#clearBtn').on('click', function() {
-		//alert("지우기");
 		$('#subject').val("");
 		$('#content').val("");
 	});
 	
-	//글 저장 버튼
+	// 글 저장 버튼
 	$('#saveBtn').on('click', function() {
 		let subject = $('#subject').val().trim();
 		let content = $('#content').val();
-		let fileName = $('#file').val(); 
+		let fileName = $('#file').val(); //C:\fakepath\KakaoTalk_20230823_010837543.jpg
+		//alert(file); 
 		
-		//alert(file); //경로주소가 나온다
 		
-		//validation check
+		// validation check
 		if (!subject) {
-			//alert("제목을 입력하세요.");
+			alert("제목을 입력하세요.");
 			return;
 		}
 		
 		if (!content) {
-			//alert("내용을 입력하세요.");
+			alert("내용을 입력하세요.");
 			return;
 		}
 		
 		//파일이 업로드 된 경우에만 확장자 체크
-		if (fileName) { //file이 있을 때
-			//경로주소 여기에 붙여넣기
+		if (fileName) { //파일이 있을 때
+			//alert("파일이 있다");
+			//C:\fakepath\KakaoTalk_20230823_010837543.jpg
 			//확장자만 뽑은 후 소문자로 변경한다
-			//pop() : 제일 마지막 stack을 뽑아내는것
-			let ext = fileName.split(".").pop();
+			//pop() : stack에서 제일 위에있는것을 뽑아낸다는 의미(삭제한다는 의미도 내포되어있음)
+			let ext = fileName.split(".").pop().toLowerCase();
 			//alert(ext);
 			
-			if ($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) == -1) { //-1 : 찾을 수 없다
+			if ($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) == -1) { //배열 안에 이(['jpg', 'jpeg', 'png', 'gif']) ext가 있나?
+				//-1 : 인덱스가 없다는 의미	
 				alert("이미지 파일만 업로드 할 수 있습니다");
-				$('#file').val(""); //파일을 비운다
+				$('#file').val(""); //이미지 파일이 아닌게 선택 되면 지운다
 				return;
 			}
+			
 		}
 		
 		
+		//return; //임시코드 (서버에 보내지 않도록)
 		
-		//request param 구성
-		//이미지를 업로드 할 때는 반드시 form 태그가 있어야 한다.
+		// request param 구성
+		// 이미지를 업로드 할 때는 반드시 form 태그가 있어야 한다.
 		let formData = new FormData();
-		formData.append("subject", subject); //key는 form태그의 name속성과 같고 Request parameter명이 된다.
+		formData.append("subject", subject); // key는 form 태그의 name 속성과 같고 Request parameter명이 된다.
 		formData.append("content", content);
 		formData.append("file", $('#file')[0].files[0]);
 		
 		$.ajax({
-			//request
+			// request
 			type:"post"
 			, url:"/post/create"
 			, data:formData
@@ -90,21 +92,20 @@ $(document).ready(function() {
 			, processData:false // 파일 업로드를 위한 필수 설정
 			, contentType:false // 파일 업로드를 위한 필수 설정
 			
-			//response
+			// response
 			, success:function(data) {
 				if (data.result == "성공") {
 					alert("메모가 저장되었습니다.");
-					location.href="/post/post-list-view";
+					location.href = "/post/post-list-view";
 				} else {
-					//로직 실패
+					// 로직 실패
 					alert(data.errorMessage);
-				} 
+				}
 			}
 			, error:function(request, status, error) {
-				alert("글을 저장하는데에 실패했습니다.");
+				alert("글을 저장하는데 실패했습니다.");
 			}
 		});
 	});
-	
 });
 </script>

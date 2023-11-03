@@ -97,7 +97,7 @@ $(document).ready(function() {
 	});
 	
 	//회원가입 submit
-	$('#signUpForm').on(function(e) {
+	$('#signUpForm').on('submit', function(e) {
 		e.preventDefault(); // 서브밋 기능을 막는다 
 		
 		//validation
@@ -154,7 +154,7 @@ $(document).ready(function() {
 			//{"code":200, "result":"성공"}
 			if (data.code == 200) { //성공
  				alert("가입을 환영합니다. 로그인을 해주세요");
-				location.href = "/user.sign-in-view";
+				location.href = "/user/sign-in-view";
 			} else {
 				//로직상 실패
 				alert("data.errorMessage");

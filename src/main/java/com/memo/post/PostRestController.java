@@ -39,10 +39,10 @@ public class PostRestController {
 		
 		//session에 들어있는 유저 id를 꺼낸다
 		int userId = (int)session.getAttribute("userId"); //일부러 에러내기 위해서 int , 원래는 Integer가 맞음
-		String userloginId = (String)session.getAttribute("userloginId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		//db insert
-		postBO.addPost(userId, userloginId, subject, content, file); //session은 무거워서 bo까지 안내리고 따로 가져와야한다
+		postBO.addPost(userId, userLoginId, subject, content, file); //session은 무거워서 bo까지 안내리고 따로 가져와야한다
 		
 		//응답값
 		Map<String, Object> result = new HashMap<>();

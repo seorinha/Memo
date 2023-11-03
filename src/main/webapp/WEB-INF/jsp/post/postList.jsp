@@ -5,8 +5,8 @@
 <div class="d-flex jutify-content-center">
 	<div class="w-50">
 		<h1>글 목록</h1>
-		${postList}
-		<table>
+		
+		<table class="table">
 			<thead>
 				<tr>
 					<th>No.</th>
@@ -22,10 +22,10 @@
 					<td>${post.subject}</td>
 					<td>
 						<%--zonedDateTime -> Date -> String --%>
-						<fmt:parseDate value="${post.createdAt}" var="parsedCreatedAt" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+						<fmt:formatDate value="${post.createdAt}" pattern="yyyy년 M월 d일 HH:mm:dd" />
 					</td>
 					<td>
-					<fmt:parseDate value="${post.updatedAt}" var="parsedUpdatedAt" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+					<fmt:formatDate value="${post.updatedAt}" pattern="yyyy년 M월 d일 HH:mm:dd" />
 					</td>
 				</tr>
 			</c:forEach>

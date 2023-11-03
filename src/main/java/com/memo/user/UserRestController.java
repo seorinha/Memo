@@ -56,7 +56,7 @@ public class UserRestController {
 	 * @param email
 	 * @return
 	 */
-	@PostMapping("sign-up")
+	@PostMapping("/sign-up")
 	public Map<String, Object> signUp(
 			@RequestParam("loginId") String loginId,
 			@RequestParam("password") String password,
@@ -97,6 +97,7 @@ public class UserRestController {
 		
 		//db insert
 		UserEntity user = userBO.getUserEntityByLoginIdPassword(loginId, hashedPassword);
+		
 		//응답값
 		Map<String, Object> result = new HashMap<>();
 		if (user != null) { //로그인 처리

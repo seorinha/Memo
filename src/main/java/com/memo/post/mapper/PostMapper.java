@@ -15,7 +15,7 @@ public interface PostMapper {
     public List<Map<String, Object>> selectPostList();
     
     //게시판 글 목록 뷰
-    public List<Post> selectpostListByUserId(int userId);
+    public List<Post> selectPostListByUserId(int userId);
     
     //글쓰기 submit
     public void insertPost(
