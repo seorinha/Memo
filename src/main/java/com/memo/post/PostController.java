@@ -55,7 +55,13 @@ public class PostController {
 	}
 	
 	
-	//
+	/**
+	 * 글 상세 화면 뷰
+	 * @param postId
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/post-detail-view")
 	public String postDetailView(
 			@RequestParam ("postId") int postId,
