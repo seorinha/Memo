@@ -39,5 +39,7 @@ public interface PostMapper {
     		@Param("imagePath") String imagePath);
     
     
+    //글 삭제
+    public void deletePostByPostId(int postId);
     
 }

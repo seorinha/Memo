@@ -21,7 +21,8 @@
 		
 		<%--버튼 세개를 한줄에 배치 --%>
 		<div class="d-flex justify-content-between">
-			<button type="button" id="deleteBtn" class="btn btn-secondary">삭제</button>
+			<%--글 삭제 버튼--%>
+			<button type="button" id="deleteBtn" class="btn btn-secondary" data-post-id="${post.id}">삭제</button>
 			
 			<div>
 				<a href="/post/post-list-view" class="btn btn-dark">목록</a>
@@ -39,7 +40,7 @@ $(document).ready(function() {
 		let subject = $('#subject').val().trim();
 		let content = $('#content').val();
 		let fileName = $('#file').val();
-		alert(postId);
+		//alert(postId);
 		
 		
 		// validation check
@@ -71,6 +72,7 @@ $(document).ready(function() {
 			}
 		}
 		
+		
 		// request param 구성
 		// 이미지를 업로드 할 때는 반드시 form 태그가 있어야 한다.
 		let formData = new FormData();
@@ -82,7 +84,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			// request
-			type:"put"
+			type:"put" //put은 post의 일종이다
 			, url:"/post/update"
 			, data:formData
 			, enctype:"multipart/form-data" // 파일 업로드를 위한 필수 설정
@@ -103,8 +105,36 @@ $(document).ready(function() {
 				alert("글을 저장하는데 실패했습니다.");
 			}
 		});
-		
-		
 	});
+	
+	//글 삭제버튼
+	$('#deleteBtn').on('click', function(e) {
+		//alert("삭제버튼");
+		e.preventDefault();
+		
+		let postId = $(this).data("post-id");
+		//alert(postId);
+		
+		
+		$.ajax({
+			//request
+			type:"delete"
+			, url:"/post/delete"
+			, data:{"postId":postId}
+			
+			//response
+			, success:function(data) {
+				if (data.code == 200) {
+					location.href = "/post/post-list-view";
+				} else {
+					alert(data.errorMessage);
+				}					
+			}
+			, error:function(request, status, error) {
+				alert("글 삭제에 실패했습니다.");
+			}
+		});
+	});
+	
 });
 </script>

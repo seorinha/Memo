@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +55,15 @@ public class PostRestController {
 	}
 	
 	
-	//글 수정하기
+	/**
+	 * 글 수정하기
+	 * @param postId
+	 * @param subject
+	 * @param content
+	 * @param file
+	 * @param session
+	 * @return
+	 */
 	@PutMapping("/update")
 	public Map<String, Object> update(
 			@RequestParam("postId") int postId,
@@ -63,22 +72,46 @@ public class PostRestController {
 			@RequestParam(value = "file", required = false) MultipartFile file,
 			HttpSession session) { 
 		
-		int userId = (int)session.getAttribute("userId");
+		int userId = (int)session.getAttribute("userId"); //session에서 userId를 꺼낸다
 		String userLoginId = (String)session.getAttribute("userLoginId");  //키가 기억 안나면 userRestController 확인
 		
 		//db update
 		postBO.updatePost(userId, userLoginId, postId, subject, content, file);
 		
 		
-		
+		//응답값
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);
 		result.put("result", "성공");
 		
 		return result;
-		
-		
 	}
 	
+	
+	//글 삭제하기
+	@DeleteMapping("/delete")
+	public Map<String, Object> delete(
+			@RequestParam("postId") int postId, 
+			HttpSession session) {
+		
+		Map<String, Object> result = new HashMap<>();
+		//로그인 여부 확인
+		Integer userId = (Integer)session.getAttribute("userId");
+		if (userId == null) {
+			result.put("code", 500);
+			result.put("errorMessage", "로그인 되지않은 사용자입니다.");
+			
+			return result;
+		}
+		
+		//삭제
+		postBO.deletePostByPostId(postId);
+		
+		//응답값
+		result.put("code", 200);
+		result.put("result", "성공");
+		
+		return result;
+	}
 	
 }
