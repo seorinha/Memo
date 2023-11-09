@@ -92,22 +92,16 @@ public class PostRestController {
 	@DeleteMapping("/delete")
 	public Map<String, Object> delete(
 			@RequestParam("postId") int postId, 
-			HttpSession session) {
+			HttpSession session) { //session :내가 쓴 글인가 확인
 		
-		Map<String, Object> result = new HashMap<>();
 		//로그인 여부 확인
-		Integer userId = (Integer)session.getAttribute("userId");
-		if (userId == null) {
-			result.put("code", 500);
-			result.put("errorMessage", "로그인 되지않은 사용자입니다.");
-			
-			return result;
-		}
+		int userId = (int)session.getAttribute("userId");
 		
 		//삭제
-		postBO.deletePostByPostId(postId);
+		postBO.deletePostByPostIdUserId(postId, userId);
 		
 		//응답값
+		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);
 		result.put("result", "성공");
 		

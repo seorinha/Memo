@@ -88,10 +88,23 @@ public class PostBO {
 	
 	
 	//글 삭제하기
-	//input: 삭제할 postId
+	//input: 글 번호, 글쓴이 번호
 	//output:x
-	public void deletePostByPostId(int postId) {
-		postMapper.deletePostByPostId(postId);
+	public void deletePostByPostIdUserId(int postId, int userId) {
+		// 기존 글 가져옴(이미지가 있으면 삭제야하기 떼문)
+		Post post = postMapper.selectPostByPostIdUserId(postId, userId);
+		if (post == null) {
+			logger.info("[글 삭제] post가 null. postId:{}, userId:{}", postId, userId);
+			return;
+		}
+		//기존 이미지가 존재하면 -> 삭제
+		if (post.getImagePath() !=null) {
+			fileManager.deleteFile(post.getImagePath());
+		}
+		
+		
+		//db 삭제
+		postMapper.deletePostByPostIdUserId(postId, userId);
 	}
 	
 }

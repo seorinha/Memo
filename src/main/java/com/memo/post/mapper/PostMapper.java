@@ -40,6 +40,8 @@ public interface PostMapper {
     
     
     //글 삭제
-    public void deletePostByPostId(int postId);
+    public void deletePostByPostIdUserId(
+    		@Param("postId") int postId,
+    		@Param("userId") int userId);
     
 }

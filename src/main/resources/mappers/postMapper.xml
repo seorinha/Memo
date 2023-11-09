@@ -77,7 +77,7 @@
  			AND `userId` = #{userId}
  	</update>
  	
- 	<delete id="deletePostByPostId" parameterType="int">
+ 	<delete id="deletePostByPostIdUserId" parameterType="int">
  		DELETE
  		FROM
  			`post`
