@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<div class="d-flex jutify-content-center">
+<div class="d-flex justify-content-center">
 	<div class="w-50">
 		<h1>글 목록</h1>
 		
-		<table class="table">
+		<table class="table col-12">
 			<thead>
 				<tr>
 					<th>No.</th>
@@ -31,6 +31,16 @@
 			</c:forEach>
 			</tbody>
 		</table>
+		
+		<%--paging --%>
+		<div class="text-center">
+		<c:if test="${prevId ne 0}">
+			<a href="/post/post-list-view?prevId=${prevId}" class="mr-5">&lt;&lt; 이전</a>
+		</c:if>	
+		<c:if test="${nextId ne 0}">
+			<a href="/post/post-list-view?nextId=${nextId}">다음 &gt;&gt;</a>
+		</c:if>
+		</div>
 		
 		<div class="d-flex justify-content-end">
 			<a href="/post/post-create-view" class="btn btn-warning">글쓰기</a>

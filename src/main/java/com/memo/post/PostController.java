@@ -28,7 +28,10 @@ public class PostController {
 	 * @return
 	 */
 	@GetMapping("/post-list-view")
-	public String postListView(Model model, HttpSession session) {
+	public String postListView(
+			@RequestParam(value = "prevId", required = false) Integer prevIdParam, 
+			@RequestParam(value = "nextId", required = false) Integer nextIdParam, 
+			Model model, HttpSession session) {
 		//로그인 여부 조회
 		Integer userId = (Integer)session.getAttribute("userId");
 		if (userId == null) {
@@ -36,8 +39,30 @@ public class PostController {
 			return "redirect:/user/sign-in-view";
 		}
 		
-		List<Post> postList = postBO.getPostListByUserId(userId);
+		List<Post> postList = postBO.getPostListByUserId(userId, prevIdParam, nextIdParam);
+		int nextId = 0;
+		int prevId = 0;
+		if (postList.isEmpty() == false) {
+			//postList가 비어있을 때 오류를 방지하기 위함  []
+			nextId = postList.get(postList.size() - 1).getId(); //가져온 리스트의 가장 끝 값(작은 id)
+			prevId = postList.get(0).getId();
+			
+			//이전 방향의 끝인가?
+			//prevId와 post테이블의 가장 큰 id값이 같다면 이전 페이지가 없다는 뜻
+			if (postBO.isPrevLastPageByUserId(prevId, userId)) {
+				prevId = 0;
+			}
+			
+			//다음 방향의 끝인가?
+			//nextId와 post테이블의 가장 작은 id값이 같면 다음 페이지가 없다는 뜻
+			if (postBO.isNextLastPageByUserId(nextId, userId)) {
+				nextId = 0;
+			}
+ 		}
 		
+		
+		model.addAttribute("prevId", prevId);
+		model.addAttribute("nextId", nextId);
 		model.addAttribute("postList", postList);
 		model.addAttribute("viewName", "post/postList");
 		return "template/layout";

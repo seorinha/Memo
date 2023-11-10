@@ -1,5 +1,6 @@
 package com.memo.post.bo;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,6 +18,9 @@ public class PostBO {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	
+	private static final int POST_MAX_SIZE = 3; 
+	
 	@Autowired //new를 하지않고 spring bean을 가져온다
 	private PostMapper postMapper;
 	
@@ -26,9 +30,49 @@ public class PostBO {
 	//게시판 글 목록 뷰
 	//input:userId
 	//output:List<Post>
-	public List<Post> getPostListByUserId(int userId) {
-		return postMapper.selectPostListByUserId(userId);
+	public List<Post> getPostListByUserId(int userId, Integer prevId, Integer nextId) {
+		// 게시글 번호: 10 9 8 | 7 6 5 | 4 3 2 | 1 
+		// 내가 만약  432 페이지에 있을 때 
+		//1. 다음을 누른다면: 2보다 작은 3개, desc
+		//2. 이전을 누른다면: 4보다 큰 3개 asc(5 6 7)을 뒤집어야한다-> List reverse(765)
+		//3. 첫 페이지를 누른다면: 이전, 당음 없음 desc 3개
+		
+		String direction = null; //방향
+		Integer standardId = null; // 기준 postId
+		if (prevId != null) { //이전
+			direction = "prev";
+			standardId = prevId;
+			
+			List<Post> postList = postMapper.selectPostListByUserId(userId, direction, standardId, POST_MAX_SIZE);
+					
+			//reverse 5 6 7 -> 7 6 5
+			Collections.reverse(postList); //뒤집고 저장
+			
+			return postList;
+					
+		} else if (nextId != null) { //다음
+			direction = "next";
+			standardId = nextId;
+		}
+		
+		//첫페이지 or 다음
+		return postMapper.selectPostListByUserId(userId, direction, standardId, POST_MAX_SIZE);
 	}
+	
+	//이전 페이지의 마지막인가?
+	public boolean isPrevLastPageByUserId(int prevId, int userId) {
+		int postId = postMapper.selectPostIdByUserIdAndSort(userId, "DESC");
+		return postId == prevId; //같으면 끝 true, 아니면 false
+	}
+	
+	//다음 페이지의 마지막인가
+	public boolean isNextLastPageByUserId(int nextId, int userId) {
+		int postId = postMapper.selectPostIdByUserIdAndSort(userId, "ASC");
+		return postId == nextId; //같으면 끝 true, 아니면 false
+	}
+	
+	
+	
 	
 	//글 상세 가져오기
 	//input: postId, userId

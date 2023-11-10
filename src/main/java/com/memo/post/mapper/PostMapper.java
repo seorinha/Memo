@@ -14,8 +14,19 @@ public interface PostMapper {
 	//
     public List<Map<String, Object>> selectPostList();
     
-    //게시판 글 목록 뷰
-    public List<Post> selectPostListByUserId(int userId);
+    //게시판 글 목록 뷰 + 이전, 다음 , 첫페이지
+    public List<Post> selectPostListByUserId(
+    		@Param("userId") int userId,
+    		@Param("direction") String direction,
+    		@Param("standardId") Integer standardId,
+    		@Param("limit") int limit);
+    
+    
+    //이전끝 다음 끝 없애기 설정
+    public int selectPostIdByUserIdAndSort(
+    		@Param("userId") int userId,
+    		@Param("sort") String sort);
+    
     
     //글상세 가져오기
     public Post selectPostByPostIdUserId(
